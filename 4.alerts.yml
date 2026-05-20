@@ -1,0 +1,10 @@
+groups:
+    - name: vip
+    rules:
+            - alert: VIPHighTraffic
+        expr: sum by (vip) (rate(http_requests_total{vip!=""}[1m])) > 60000
+        for: 3m
+        labels:
+          severity: critical
+        annotations:
+          summary: "VIP {{ $labels.vip }} pasando 60k RPS"
